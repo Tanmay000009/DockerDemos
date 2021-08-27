@@ -10,7 +10,8 @@ WORKDIR /app
 # So with help of package.json, we prevent docker from reinstalling again and again, and use packages from cache
 COPY package.json /app
 
-RUN npm i
+# Even change from npm i to npm install will make docker rerun the layer again
+RUN npm install
 
 
 # Copy all the contents from root folder to a folder named app in container, as app is our workdir
