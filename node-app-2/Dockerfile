@@ -5,10 +5,16 @@ FROM node
 # So specifying for once and all
 WORKDIR /app
 
-# Copy all the contents from root folder to a folder named app in container, as app is our workdir
-COPY . /app
+# We copy package.json pehle as if even small change in code will result in re install of pachanges, as if 1 layer of docker has changes
+# it'll run all of the subsquent layers aswell. 
+# So with help of package.json, we prevent docker from reinstalling again and again, and use packages from cache
+COPY package.json /app
 
 RUN npm i
+
+
+# Copy all the contents from root folder to a folder named app in container, as app is our workdir
+COPY . /app
 
 # All of commands above this will be made run when creating image
 
